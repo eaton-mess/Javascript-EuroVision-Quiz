@@ -25,6 +25,8 @@ var userInitial = document.querySelector("#initials");
 
 var submitBtn = document.querySelector("#submit");
 var highScorePage = document.querySelector("#highscores");
+var scoreRecord = document.getElementById("score-record");
+var scoreCheck = document.querySelector(".scores a");
 
 var backBtn = document.querySelector("#go-back");
 var clearBtn = document.querySelector("#clear-scores");
@@ -302,3 +304,25 @@ clearBtn.addEventListener("click", function (event) {
     localStorage.clear();
     renderScore();
 });
+
+function showHighScores() {
+    introPage.style.display = "none";
+    questionPage.style.display = "none";
+    scoreBoard.style.display = "none";
+    highScorePage.style.display = "block";
+    renderScore();
+}
+
+scoreCheck.addEventListener("click", function (event) {
+    event.preventDefault();
+    showHighScores();
+});
+
+function saveScore() {
+    var scoreItem = {
+        user: userInitial.value,
+        score: totalScore,
+    };
+    addItem(scoreItem);
+    showHighScores(); // Display high scores after saving
+}
