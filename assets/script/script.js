@@ -252,7 +252,15 @@ function saveScore() {
     renderScore();
 }
 
-startBtn.addEventListener("click", startQuiz);
+function playAudioOnStart() {
+    var audio = document.getElementById('myAudio');
+    audio.play();
+}
+
+startBtn.addEventListener("click", function () {
+    startQuiz();
+    playAudioOnStart();
+});
 
 reactButtons.forEach(function (click) {
     click.addEventListener("click", checkAnswer);
