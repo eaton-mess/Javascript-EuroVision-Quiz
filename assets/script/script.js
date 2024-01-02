@@ -151,6 +151,11 @@ function showHighScores() {
     renderScore();
 }
 
+function playAudioOnStart() {
+    const introAudio = document.getElementById("introAudio");
+    introAudio.play();
+}
+
 // Event listeners
 startBtn.addEventListener("click", () => {
     startQuiz();
