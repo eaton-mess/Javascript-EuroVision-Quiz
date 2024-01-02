@@ -156,7 +156,7 @@ function showQuestion(n) {
         var answerBtn = document.createElement("button");
         answerBtn.textContent = questionSource[n].choices[i];
         answerBtn.classList.add("choices");
-        answerBtn.setAttribute("value", String.fromCharCode(97 + i)); 
+        answerBtn.setAttribute("value", String.fromCharCode(97 + i));
         document.getElementById("choices").appendChild(answerBtn);
     }
 
