@@ -110,4 +110,29 @@ var questionSource = [
     },
 ];
 
+// setting timer variables
+var timeLeft = document.getElementById("time");
+var secondsLeft = 60;
+var questionNumber = 0;
+var totalScore = 0;
+var questionCount = 1;
+
+// timer functions
+function countdown() {
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timeLeft.textContent = "remaining: " + secondsLeft + " s";
+
+        if (secondsLeft <= 0) {
+            clearInterval(timerInterval);
+            timeLeft.textContent = "Time's Up!";
+            // if time is up, show on score board content instead of "all done!"
+            finish.textContent = "Time's Up!";
+            gameOver();
+        } else if (questionCount >= questionSource.length + 1) {
+            clearInterval(timerInterval);
+            gameOver();
+        }
+    }, 1000);
+}
 
