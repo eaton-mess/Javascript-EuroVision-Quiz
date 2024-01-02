@@ -135,8 +135,6 @@ function countdown() {
     }, 1000);
 }
 
-
-// Click the button to start the quiz
 function startQuiz() {
     introPage.style.display = "none";
     questionPage.style.display = "block";
@@ -156,9 +154,143 @@ function showQuestion(n) {
         var answerBtn = document.createElement("button");
         answerBtn.textContent = questionSource[n].choices[i];
         answerBtn.classList.add("choices");
-        answerBtn.setAttribute("value", String.fromCharCode(97 + i)); // Assign 'a', 'b', 'c', 'd' as values
+        answerBtn.setAttribute("value", String.fromCharCode(97 + i)); 
         document.getElementById("choices").appendChild(answerBtn);
     }
 
     questionNumber = n;
 }
+
+//once choice is selected, present user with outcome
+function checkAnswer(event) {
+    event.preventDefault();
+    checkLine.style.display = "block";
+    setTimeout(function () {
+        checkLine.style.display = "none";
+    }, 1000);
+
+    //checking if answer is correct
+    if (questionSource[questionNumber].answer == event.target.value) {
+        checkLine.textContent = "Correct!";
+        totalScore = totalScore + 1;
+    } else {
+        secondsLeft = secondsLeft - 10;
+        checkLine.textContent =
+            "Wrong! The correct answer is " + questionSource[questionNumber].answer + " .";
+    }
+    //once complete anothewr question displays on screen
+    if (questionNumber < questionSource.length - 1) {
+        showQuestion(questionNumber + 1);
+    } else {
+        gameOver();
+    }
+    questionCount++;
+}
+
+//when all questions are answered or timer reaches 0
+function gameOver() {
+    questionPage.style.display = "none";
+    scoreBoard.style.display = "block";
+    console.log(scoreBoard);
+    finalScore.textContent = "Your final score is :" + totalScore;
+    timeLeft.style.display = "none";
+}
+
+function getScore() {
+    var currentList = localStorage.getItem("ScoreList");
+    if (currentList !== null) {
+        freshList = JSON.parse(currentList);
+        return freshList;
+    } else {
+        freshList = [];
+    }
+    return freshList;
+}
+
+function renderScore() {
+    scoreRecord.innerHTML = "";
+    scoreRecord.style.display = "block";
+    var highScores = sort();
+
+    var topFive = highScores.slice(0, 5);
+    for (var i = 0; i < topFive.length; i++) {
+        var item = topFive[i];
+        // Show the score list on the scoreboard
+        var li = document.createElement("li");
+        li.textContent = item.user + " - " + item.score;
+        li.setAttribute("data-index", i);
+        scoreRecord.appendChild(li);
+    }
+}
+
+// sorting scores
+function sort() {
+    var unsortedList = getScore();
+    if (getScore == null) {
+        return;
+    } else {
+        unsortedList.sort(function (a, b) {
+            return b.score - a.score;
+        });
+        return unsortedList;
+    }
+}
+
+// push new score and initial to the local storage
+function addItem(n) {
+    var addedList = getScore();
+    addedList.push(n);
+    localStorage.setItem("ScoreList", JSON.stringify(addedList));
+}
+
+function saveScore() {
+    var scoreItem = {
+        user: userInitial.value,
+        score: totalScore,
+    };
+    addItem(scoreItem);
+    renderScore();
+}
+
+startBtn.addEventListener("click", startQuiz);
+
+reactButtons.forEach(function (click) {
+    click.addEventListener("click", checkAnswer);
+});
+
+// prompt to save info and move to the next page
+submitBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    scoreBoard.style.display = "none";
+    introPage.style.display = "none";
+    highScorePage.style.display = "block";
+    questionPage.style.display = "none";
+    saveScore();
+});
+
+//process to check high scores
+scoreCheck.addEventListener("click", function (event) {
+    event.preventDefault();
+    scoreBoard.style.display = "none";
+    introPage.style.display = "none";
+    highScorePage.style.display = "block";
+    questionPage.style.display = "none";
+    renderScore();
+});
+
+//return to homepage shortcut
+backBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    scoreBoard.style.display = "none";
+    introPage.style.display = "block";
+    highScorePage.style.display = "none";
+    questionPage.style.display = "none";
+    location.reload();
+});
+
+//clearing local storage
+clearBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    localStorage.clear();
+    renderScore();
+});
