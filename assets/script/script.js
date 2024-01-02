@@ -126,7 +126,6 @@ function countdown() {
         if (secondsLeft <= 0) {
             clearInterval(timerInterval);
             timeLeft.textContent = "Time's Up!";
-            // if time is up, show on score board content instead of "all done!"
             finish.textContent = "Time's Up!";
             gameOver();
         } else if (questionCount >= questionSource.length + 1) {
@@ -136,3 +135,30 @@ function countdown() {
     }, 1000);
 }
 
+
+// Click the button to start the quiz
+function startQuiz() {
+    introPage.style.display = "none";
+    questionPage.style.display = "block";
+    questionNumber = 0;
+    countdown();
+    showQuestion(questionNumber);
+}
+
+// Present the questions and answers
+function showQuestion(n) {
+    askQuestion.textContent = questionSource[n].question;
+
+    // Clear existing answer buttons
+    document.getElementById("choices").innerHTML = "";
+
+    for (var i = 0; i < questionSource[n].choices.length; i++) {
+        var answerBtn = document.createElement("button");
+        answerBtn.textContent = questionSource[n].choices[i];
+        answerBtn.classList.add("choices");
+        answerBtn.setAttribute("value", String.fromCharCode(97 + i)); // Assign 'a', 'b', 'c', 'd' as values
+        document.getElementById("choices").appendChild(answerBtn);
+    }
+
+    questionNumber = n;
+}
