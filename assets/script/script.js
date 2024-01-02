@@ -65,26 +65,28 @@ function showQuestion(n) {
 
 // Function to check the selected answer
 function checkAnswer(event) {
-    event.preventDefault();
-    checkLine.style.display = "block";
-    setTimeout(() => {
-        checkLine.style.display = "none";
-    }, 1000);
+    if (event.target.matches("button.choices")) {
+        event.preventDefault();
+        checkLine.style.display = "block";
+        setTimeout(() => {
+            checkLine.style.display = "none";
+        }, 1000);
 
-    if (questionSource[questionNumber].answer === event.target.value) {
-        checkLine.textContent = "Correct!";
-        totalScore++;
-    } else {
-        secondsLeft -= 10;
-        checkLine.textContent = `Wrong! The correct answer is ${questionSource[questionNumber].answer}.`;
-    }
+        if (questionSource[questionNumber].answer === event.target.value) {
+            checkLine.textContent = "Correct!";
+            totalScore++;
+        } else {
+            secondsLeft -= 10;
+            checkLine.textContent = `Wrong! The correct answer is ${questionSource[questionNumber].answer}.`;
+        }
 
-    if (questionNumber < questionSource.length - 1) {
-        showQuestion(questionNumber + 1);
-    } else {
-        gameOver();
+        if (questionNumber < questionSource.length - 1) {
+            showQuestion(questionNumber + 1);
+        } else {
+            gameOver();
+        }
+        questionCount++;
     }
-    questionCount++;
 }
 
 // Function to handle the end of the quiz
