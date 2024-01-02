@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Coding Quiz</title>
+    <title>Eurovision Quiz</title>
 
     <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
@@ -15,11 +15,12 @@
     <div class="timer">Time: <span id="time">0</span></div>
 
     <div class="wrapper">
+      <!--start screen section-->
       <div id="start-screen" class="start">
-        <h1>Coding Quiz Challenge</h1>
-        <p>
-          Try to answer the following code-related questions within the time
-          limit. Keep in mind that incorrect answers will penalize your
+        <h1>Eurovision Quiz Challenge</h1>
+        <p id="start-text">
+          Try to answer the following Eurovision-related questions within the time
+          limit. Keep in mind that incorrect answers will reduce your
           score/time by ten seconds!
         </p>
         <button id="start">Start Quiz</button>
@@ -42,7 +43,6 @@
       <div id="feedback" class="feedback hide"></div>
     </div>
 
-    <script src="./assets/js/questions.js"></script>
-    <script src="./assets/js/logic.js"></script>
+    <script src="./assets/script/script.js"></script>
   </body>
 </html>
