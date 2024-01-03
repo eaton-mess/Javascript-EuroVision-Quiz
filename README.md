@@ -1,4 +1,4 @@
-# Password-Generator
+# JavaScript Eurovision Quiz
 
 ## Description 
 
