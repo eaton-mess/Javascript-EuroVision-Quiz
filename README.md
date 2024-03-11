@@ -27,7 +27,7 @@ This repository should demonstrate the use of an online quiz, with a 60 second t
 ## Author
 
 Lauren Eaton
-https://github.com/eatontechnology
+https://github.com/eaton-mess
 
 ## License
 
